@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Petualangan Bakat & Minatku - Kelas 4 SD</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Chart.js for visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <!-- Google Fonts: Fredoka & Quicksand -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandYellow: '#FFD166',
+            brandPink: '#FF70A6',
+            brandPurple: '#70D6FF',
+            brandGreen: '#06D6A0',
+            brandOrange: '#FF9F1C',
+            brandDark: '#2B2D42'
+          },
+          fontFamily: {
+            fredoka: ['Fredoka', 'sans-serif'],
+            quicksand: ['Quicksand', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #E0F7FA 0%, #FFF9C4 50%, #FCE4EC 100%);
+      min-height: 100vh;
+    }
+    .font-heading {
+      font-family: 'Fredoka', sans-serif;
+    }
+    .bouncy-hover {
+      transition: all 0.2s ease-in-out;
+    }
+    .bouncy-hover:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+    .custom-shadow {
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+    @media print {
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      body { background: white !important; }
+    }
+  </style>
+</head>
+<body class="text-slate-800 p-3 sm:p-6 flex flex-col items-center justify-center min-h-screen">
+
+  <div class="w-full max-w-4xl bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border-4 border-white overflow-hidden relative min-h-[600px] flex flex-col">
+    
+    <!-- HEADER APP -->
+    <header class="bg-gradient-to-r from-teal-400 via-sky-400 to-indigo-400 p-4 sm:p-6 text-white text-center relative no-print">
+      <div class="flex justify-center items-center gap-2 mb-1">
+        <span class="text-3xl sm:text-4xl animate-bounce">🌟</span>
+        <h1 class="font-heading text-2xl sm:text-4xl font-bold tracking-wide drop-shadow-md">
+          PETUALANGAN BAKAT & MINATKU
+        </h1>
+        <span class="text-3xl sm:text-4xl animate-bounce">🚀</span>
+      </div>
+      <p class="font-heading text-sm sm:text-lg text-yellow-100 font-medium">
+        Jelajahi Potensi Unik Diri Bersama Kelas 4 SD!
+      </p>
+    </header>
+
+    <!-- CONTENT CONTAINERS -->
+    <main class="p-4 sm:p-8 flex-1 flex flex-col justify-center">
+
+      <!-- ================= SCREEN 1: INTRO & BIODATA ================= -->
+      <section id="screen-intro" class="space-y-6">
+        <!-- Kalimat Utama / Quoted Message Banner -->
+        <div class="bg-amber-100 border-l-8 border-amber-500 p-4 sm:p-5 rounded-2xl shadow-sm relative">
+          <div class="flex gap-3 items-start">
+            <i class="fa-solid fa-lightbulb text-amber-500 text-2xl sm:text-3xl mt-1">
+            </i>
+            <div>
+              <h3 class="font-heading text-amber-900 font-bold text-base sm:text-lg mb-1">Pesan Penting untuk Anak & Orang Tua:</h3>
+              <p class="text-amber-900 text-sm sm:text-base leading-relaxed italic font-medium">
+                "Tujuan utama mengenali bakat dan minat di usia kelas 4 SD bukanlah untuk mencetak anak menjadi juara, melainkan untuk membangun rasa percaya diri, karakter tangguh, dan kegemaran belajar yang akan berguna seumur hidup mereka."
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-sky-50 rounded-2xl p-5 border-2 border-sky-200">
+          <h2 class="font-heading text-xl font-bold text-sky-800 mb-4 text-center">
+            <i class="fa-solid fa-id-card text-sky-500 mr-2"></i>Isi Data Dirimu Dahulu Ya!
+          </h2>
+          <form id="form-biodata" onsubmit="startQuiz(event)" class="space-y-4 max-w-md mx-auto">
+            <div>
+              <label class="block font-heading text-slate-700 mb-1 text-sm font-semibold">Nama Lengkap Siswa:</label>
+              <input type="text" id="student-name" required placeholder="Contoh: Budi Pratama"
+                class="w-full px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-sky-500 focus:outline-none transition text-base">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block font-heading text-slate-700 mb-1 text-sm font-semibold">Kelas:</label>
+                <input type="text" value="4 (Empat)" disabled
+                  class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 bg-slate-100 text-slate-600 font-bold text-center">
+              </div>
+              <div>
+                <label class="block font-heading text-slate-700 mb-1 text-sm font-semibold">Tanggal:</label>
+                <input type="date" id="student-date" required
+                  class="w-full px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-sky-500 focus:outline-none transition text-sm">
+              </div>
+            </div>
+            <button type="submit"
+              class="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-heading text-lg font-bold rounded-xl shadow-lg hover:shadow-xl transition transform active:scale-95 flex items-center justify-center gap-2 mt-4">
+              <span>Mulai Petualangan!</span>
+              <i class="fa-solid fa-rocket"></i>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- ================= SCREEN 2: ANGKET / KUIS ================= -->
+      <section id="screen-quiz" class="hidden space-y-6">
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden border border-slate-300">
+          <div id="progress-bar" class="bg-gradient-to-r from-emerald-400 to-teal-500 h-full w-0 transition-all duration-300"></div>
+        </div>
+        
+        <div class="flex justify-between items-center text-xs sm:text-sm font-heading text-slate-600">
+          <span id="quiz-category-tag" class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full font-bold">Bagian A: Minat Aktivitas</span>
+          <span id="quiz-step-text" class="font-bold">Pertanyaan 1 dari 15</span>
+        </div>
+
+        <!-- Question Card -->
+        <div class="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 sm:p-8 rounded-3xl border-3 border-indigo-100 shadow-sm text-center min-h-[220px] flex flex-col items-center justify-center relative">
+          <div id="quiz-icon" class="text-5xl sm:text-6xl mb-4 text-indigo-500 transform transition hover:scale-110 duration-200">
+            📚
+          </div>
+          <h3 id="quiz-question" class="font-heading text-xl sm:text-2xl text-slate-800 font-bold leading-relaxed">
+            Membaca buku cerita, komik, atau ensiklopedia.
+          </h3>
+        </div>
+
+        <!-- Options Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+          <button onclick="selectOption('sangat_suka')"
+            class="bouncy-hover p-4 rounded-2xl bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-400 text-emerald-900 font-heading font-bold text-lg flex sm:flex-col items-center justify-center gap-3 shadow-md">
+            <span class="text-3xl">😍</span>
+            <span>Sangat Suka</span>
+          </button>
+          <button onclick="selectOption('suka')"
+            class="bouncy-hover p-4 rounded-2xl bg-sky-100 hover:bg-sky-200 border-2 border-sky-400 text-sky-900 font-heading font-bold text-lg flex sm:flex-col items-center justify-center gap-3 shadow-md">
+            <span class="text-3xl">😊</span>
+            <span>Suka</span>
+          </button>
+          <button onclick="selectOption('tidak_suka')"
+            class="bouncy-hover p-4 rounded-2xl bg-rose-100 hover:bg-rose-200 border-2 border-rose-400 text-rose-900 font-heading font-bold text-lg flex sm:flex-col items-center justify-center gap-3 shadow-md">
+            <span class="text-3xl">😐</span>
+            <span>Tidak Suka</span>
+          </button>
+        </div>
+
+        <!-- Back Button -->
+        <div class="flex justify-between items-center pt-2">
+          <button id="btn-prev" onclick="prevQuestion()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-heading font-semibold text-sm transition invisible">
+            <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+          </button>
+          <span class="text-xs text-slate-400">Pilih salah satu jawaban di atas</span>
+        </div>
+      </section>
+
+      <!-- ================= SCREEN 3: PERTANYAAN TERBUKA ================= -->
+      <section id="screen-open-questions" class="hidden space-y-5">
+        <div class="text-center">
+          <span class="text-4xl">💭</span>
+          <h2 class="font-heading text-2xl font-bold text-slate-800 mt-2">Sedikit Lagi Selesai!</h2>
+          <p class="text-slate-600 text-sm">Ceritakan sedikit hal kesukaanmu di bawah ini ya:</p>
+        </div>
+
+        <form id="form-open" onsubmit="finishQuiz(event)" class="space-y-4">
+          <div class="bg-amber-50 p-4 rounded-2xl border-2 border-amber-200">
+            <label class="block font-heading text-amber-900 font-bold text-sm sm:text-base mb-1">
+              1. Kegiatan apa yang paling kamu sukai saat waktu luang atau hari libur?
+            </label>
+            <textarea id="q-open-1" required rows="2" placeholder="Contoh: Bermain sepeda, membantu ibu memasak, merakit Lego..."
+              class="w-full px-4 py-2 rounded-xl border border-amber-300 focus:border-amber-500 focus:outline-none text-sm"></textarea>
+          </div>
+
+          <div class="bg-teal-50 p-4 rounded-2xl border-2 border-teal-200">
+            <label class="block font-heading text-teal-900 font-bold text-sm sm:text-base mb-1">
+              2. Pelajaran apa di sekolah yang paling kamu nantikan setiap minggunya?
+            </label>
+            <textarea id="q-open-2" required rows="2" placeholder="Contoh: Seni Budaya, Olahraga, Matematika, IPA..."
+              class="w-full px-4 py-2 rounded-xl border border-teal-300 focus:border-teal-500 focus:outline-none text-sm"></textarea>
+          </div>
+
+          <div class="bg-indigo-50 p-4 rounded-2xl border-2 border-indigo-200">
+            <label class="block font-heading text-indigo-900 font-bold text-sm sm:text-base mb-1">
+              3. Jika sudah besar nanti, kamu ingin menjadi apa? (Cita-citaku)
+            </label>
+            <input type="text" id="q-open-3" required placeholder="Contoh: Dokter, Koki, Arsitek, Pemain Sepak Bola, Guru..."
+              class="w-full px-4 py-2 rounded-xl border border-indigo-300 focus:border-indigo-500 focus:outline-none text-sm">
+          </div>
+
+          <button type="submit"
+            class="w-full py-4 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white font-heading text-xl font-bold rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+            <span>Lihat Rapor Bakatku!</span>
+            <i class="fa-solid fa-trophy"></i>
+          </button>
+        </form>
+      </section>
+
+      <!-- ================= SCREEN 4: RAPOR HASIL & PEMETAAN ================= -->
+      <section id="screen-result" class="hidden space-y-6">
+        
+        <!-- Header Rapor -->
+        <div class="text-center bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 text-white p-5 rounded-3xl shadow-md">
+          <span class="text-4xl">🎉</span>
+          <h2 class="font-heading text-2xl sm:text-3xl font-bold">PETA BAKAT & MINAT SISWA</h2>
+          <p class="text-amber-100 text-sm font-semibold mt-1">Berdasarkan Teori Kecerdasan Majemuk (Howard Gardner)</p>
+        </div>
+
+        <!-- Detail Biodata Siswa -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-100 p-4 rounded-2xl text-xs sm:text-sm border border-slate-200">
+          <div><span class="text-slate-500 block">Nama:</span> <strong id="res-name" class="text-slate-800 text-base"></strong></div>
+          <div><span class="text-slate-500 block">Kelas:</span> <strong class="text-slate-800 text-base">4 (Empat)</strong></div>
+          <div><span class="text-slate-500 block">Tanggal:</span> <strong id="res-date" class="text-slate-800 text-base"></strong></div>
+        </div>
+
+        <!-- Highlight Dominan kecerdasan -->
+        <div class="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-300 p-5 rounded-2xl">
+          <h3 class="font-heading text-emerald-900 font-bold text-lg mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-star text-amber-500 text-xl"></i>
+            Kecerdasan Menonjol Utama:
+          </h3>
+          <div id="top-intelligences" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+            <!-- Dynamic Injection -->
+          </div>
+        </div>
+
+        <!-- Chart Visualization -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <h3 class="font-heading text-center font-bold text-slate-700 mb-3">Grafik Distribusi Kecerdasan Majemuk</h3>
+          <div class="relative w-full max-w-md mx-auto h-[260px]">
+            <canvas id="intelligenceChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Rincian Skor Per Domain -->
+        <div class="space-y-3">
+          <h3 class="font-heading font-bold text-slate-800 text-base sm:text-lg">
+            <i class="fa-solid fa-list-check text-sky-500 mr-2"></i>Rincian Potensi & Karakteristik Kamu:
+          </h3>
+          <div id="domain-details" class="grid grid-cols-1 gap-3">
+            <!-- Dynamic Content -->
+          </div>
+        </div>
+
+        <!-- Jawaban Pertanyaan Terbuka -->
+        <div class="bg-amber-50 p-5 rounded-2xl border-2 border-amber-200 space-y-3">
+          <h3 class="font-heading font-bold text-amber-900 text-base">
+            <i class="fa-solid fa-heart text-rose-500 mr-2"></i>Impian & Catatan Kesukaan Siswa:
+          </h3>
+          <div class="text-sm space-y-2 text-slate-700">
+            <p><strong>Aktivitas Liburan:</strong> <span id="res-open-1"></span></p>
+            <p><strong>Pelajaran Dinantikan:</strong> <span id="res-open-2"></span></p>
+            <p><strong>Cita-cita Masa Depan:</strong> <span id="res-open-3" class="text-indigo-700 font-bold"></span></p>
+          </div>
+        </div>
+
+        <!-- QUOTE RE-EMPHASIS ON PRINT/REPORT -->
+        <div class="bg-slate-800 text-white p-5 rounded-2xl shadow-sm text-center">
+          <p class="text-xs sm:text-sm italic font-medium leading-relaxed text-slate-200">
+            "Tujuan utama mengenali bakat dan minat di usia kelas 4 SD bukanlah untuk mencetak anak menjadi juara, melainkan untuk membangun rasa percaya diri, karakter tangguh, dan kegemaran belajar yang akan berguna seumur hidup mereka."
+          </p>
+          <span class="block mt-2 font-heading text-xs text-amber-400 font-bold">— Catatan Panduan Guru & Orang Tua</span>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap gap-3 justify-center pt-4 no-print">
+          <button onclick="window.print()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-heading font-bold rounded-xl shadow-md transition flex items-center gap-2">
+            <i class="fa-solid fa-print"></i> Cetak / Simpan Rapor PDF
+          </button>
+          <button onclick="resetQuiz()" class="px-6 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-heading font-bold rounded-xl transition flex items-center gap-2">
+            <i class="fa-solid fa-rotate-right"></i> Isi Ulang
+          </button>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // DATA PERTANYAAN ANGKET KELAS 4 SD
+    const questions = [
+      { id: 1, text: "Membaca buku cerita, komik, atau ensiklopedia.", icon: "📖", category: "A. Minat Aktivitas", domains: ["linguistik"] },
+      { id: 2, text: "Menulis cerita, puisi, atau pengalaman sehari-hari.", icon: "✏️", category: "A. Minat Aktivitas", domains: ["linguistik"] },
+      { id: 3, text: "Menghitung, bermain angka, atau memecahkan teka-teki matematika.", icon: "🧩", category: "A. Minat Aktivitas", domains: ["logis"] },
+      { id: 4, text: "Melakukan eksperimen sains sederhana atau mengamati alam (tumbuhan/hewan).", icon: "🌱", category: "A. Minat Aktivitas", domains: ["logis", "naturalis"] },
+      { id: 5, text: "Menggambar, mewarnai, atau membuat kerajinan tangan (origami, tanah liat, dll).", icon: "🎨", category: "A. Minat Aktivitas", domains: ["visual"] },
+      { id: 6, text: "Menyanyikan lagu, bermain alat musik, atau mendengarkan musik.", icon: "🎵", category: "A. Minat Aktivitas", domains: ["musikal"] },
+      { id: 7, text: "Berolahraga (sepak bola, bulu tangkis, berenang, senam).", icon: "⚽", category: "A. Minat Aktivitas", domains: ["kinestetik"] },
+      { id: 8, text: "Menari atau bergerak mengikuti irama musik.", icon: "💃", category: "A. Minat Aktivitas", domains: ["musikal", "kinestetik"] },
+      { id: 9, text: "Membongkar pasang mainan, LEGO, atau merakit benda baru.", icon: "🏗️", category: "A. Minat Aktivitas", domains: ["visual"] },
+      { id: 10, text: "Berbicara di depan kelas atau bercerita kepada teman-teman.", icon: "🗣️", category: "A. Minat Aktivitas", domains: ["linguistik", "interpersonal"] },
+      { id: 11, text: "Bekerja sama dalam kelompok saat menyelesaikan tugas sekolah.", icon: "🤝", category: "B. Cara Belajar & Sosialisasi", domains: ["interpersonal"] },
+      { id: 12, text: "Mengerjakan tugas sendirian di tempat yang tenang.", icon: "🎧", category: "B. Cara Belajar & Sosialisasi", domains: ["intrapersonal"] },
+      { id: 13, text: "Membantu teman atau guru yang membutuhkan pertolongan.", icon: "❤️", category: "B. Cara Belajar & Sosialisasi", domains: ["interpersonal"] },
+      { id: 14, text: "Menjadi ketua kelompok atau memimpin permainan saat istirahat.", icon: "👑", category: "B. Cara Belajar & Sosialisasi", domains: ["interpersonal"] },
+      { id: 15, text: "Menyusun rencana atau merapikan meja dan barang-barang pribadi.", icon: "🗂️", category: "B. Cara Belajar & Sosialisasi", domains: ["intrapersonal"] }
+    ];
+
+    // DOMAIN DEFINITION (Howard Gardner)
+    const domainInfo = {
+      linguistik: {
+        title: "Kecerdasan Linguistik (Bahasa)",
+        icon: "🗣️",
+        color: "bg-blue-50 text-blue-800 border-blue-200",
+        desc: "Kamu sangat pandai merangkai kata, senang membaca, bercerita, dan mengungkapkan ide lewat lisan atau tulisan."
+      },
+      logis: {
+        title: "Kecerdasan Logis-Matematika",
+        icon: "🔢",
+        color: "bg-indigo-50 text-indigo-800 border-indigo-200",
+        desc: "Kamu suka memecahkan teka-teki, berpikir kritis, bermain angka, dan penasaran dengan alasan di balik suatu fenomena."
+      },
+      visual: {
+        title: "Kecerdasan Visual-Spasial",
+        icon: "🎨",
+        color: "bg-purple-50 text-purple-800 border-purple-200",
+        desc: "Kamu imajinatif, pandai menggambar, merakit bangunan, serta memiliki kepekaan tinggi terhadap warna dan bentuk."
+      },
+      musikal: {
+        title: "Kecerdasan Musikal",
+        icon: "🎶",
+        color: "bg-pink-50 text-pink-800 border-pink-200",
+        desc: "Kamu peka terhadap nada, irama, suka bernyanyi, atau menikmati ketukan musik saat beraktivitas."
+      },
+      kinestetik: {
+        title: "Kecerdasan Kinestetik (Fisik)",
+        icon: "🏃",
+        color: "bg-orange-50 text-orange-800 border-orange-200",
+        desc: "Kamu energik, tangkas dalam berolahraga, suka bergerak, serta mengekspresikan diri melalui aktivitas fisik."
+      },
+      interpersonal: {
+        title: "Kecerdasan Interpersonal (Sosial)",
+        icon: "👥",
+        color: "bg-emerald-50 text-emerald-800 border-emerald-200",
+        desc: "Kamu ramah, mudah berteman, suka bekerja sama, memiliki kepemimpinan alami, dan suka membantu orang lain."
+      },
+      intrapersonal: {
+        title: "Kecerdasan Intrapersonal (Mandiri)",
+        icon: "🧠",
+        color: "bg-teal-50 text-teal-800 border-teal-200",
+        desc: "Kamu mandiri, memahami perasaanmu sendiri dengan baik, rapi, dan bisa fokus saat bekerja sendirian."
+      },
+      naturalis: {
+        title: "Kecerdasan Naturalis (Alam)",
+        icon: "🌿",
+        color: "bg-lime-50 text-lime-800 border-lime-200",
+        desc: "Kamu menyukai alam terbuka, peduli pada hewan & tanaman, serta senang mengamati lingkungan sekitar."
+      }
+    };
+
+    // STATE VARIABLES
+    let currentStep = 0;
+    let userAnswers = {};
+    let studentData = {};
+    let chartInstance = null;
+
+    // Set Default Date to Today
+    document.getElementById('student-date').valueAsDate = new Date();
+
+    function startQuiz(e) {
+      e.preventDefault();
+      studentData.name = document.getElementById('student-name').value;
+      studentData.date = document.getElementById('student-date').value;
+
+      document.getElementById('screen-intro').classList.add('hidden');
+      document.getElementById('screen-quiz').classList.remove('hidden');
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = questions[currentStep];
+      document.getElementById('quiz-question').innerText = q.text;
+      document.getElementById('quiz-icon').innerText = q.icon;
+      document.getElementById('quiz-category-tag').innerText = q.category;
+      document.getElementById('quiz-step-text').innerText = `Pertanyaan ${currentStep + 1} dari ${questions.length}`;
+
+      // Progress bar
+      const progressPercent = ((currentStep + 1) / questions.length) * 100;
+      document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+      // Back button visibility
+      const btnPrev = document.getElementById('btn-prev');
+      if (currentStep > 0) {
+        btnPrev.classList.remove('invisible');
+      } else {
+        btnPrev.classList.add('invisible');
+      }
+    }
+
+    function selectOption(value) {
+      // Score Mapping: Sangat Suka = 3, Suka = 2, Tidak Suka = 1
+      let score = 1;
+      if (value === 'sangat_suka') score = 3;
+      if (value === 'suka') score = 2;
+
+      userAnswers[questions[currentStep].id] = score;
+
+      if (currentStep < questions.length - 1) {
+        currentStep++;
+        renderQuestion();
+      } else {
+        // Go to open questions
+        document.getElementById('screen-quiz').classList.add('hidden');
+        document.getElementById('screen-open-questions').classList.remove('hidden');
+      }
+    }
+
+    function prevQuestion() {
+      if (currentStep > 0) {
+        currentStep--;
+        renderQuestion();
+      }
+    }
+
+    function finishQuiz(e) {
+      e.preventDefault();
+      studentData.open1 = document.getElementById('q-open-1').value;
+      studentData.open2 = document.getElementById('q-open-2').value;
+      studentData.open3 = document.getElementById('q-open-3').value;
+
+      document.getElementById('screen-open-questions').classList.add('hidden');
+      document.getElementById('screen-result').classList.remove('hidden');
+
+      // Trigger Confetti Celebration
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+
+      calculateAndRenderResults();
+    }
+
+    function calculateAndRenderResults() {
+      // Populate Biodata
+      document.getElementById('res-name').innerText = studentData.name;
+      document.getElementById('res-date').innerText = studentData.date;
+      document.getElementById('res-open-1').innerText = studentData.open1;
+      document.getElementById('res-open-2').innerText = studentData.open2;
+      document.getElementById('res-open-3').innerText = studentData.open3;
+
+      // Calculate Domain Scores
+      const domainScores = {
+        linguistik: 0,
+        logis: 0,
+        visual: 0,
+        musikal: 0,
+        kinestetik: 0,
+        interpersonal: 0,
+        intrapersonal: 0,
+        naturalis: 0
+      };
+
+      questions.forEach(q => {
+        const score = userAnswers[q.id] || 0;
+        q.domains.forEach(d => {
+          domainScores[d] += score;
+        });
+      });
+
+      // Sort Domains by Highest Score
+      const sortedDomains = Object.keys(domainScores).sort((a, b) => domainScores[b] - domainScores[a]);
+
+      // Render Top Intelligences (Top 2)
+      const topContainer = document.getElementById('top-intelligences');
+      topContainer.innerHTML = '';
+      sortedDomains.slice(0, 2).forEach(domainKey => {
+        const info = domainInfo[domainKey];
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-xl border ${info.color} flex items-start gap-3 shadow-sm`;
+        card.innerHTML = `
+          <span class="text-3xl">${info.icon}</span>
+          <div>
+            <h4 class="font-heading font-bold text-base">${info.title}</h4>
+            <p class="text-xs sm:text-sm mt-1 leading-snug">${info.desc}</p>
+          </div>
+        `;
+        topContainer.appendChild(card);
+      });
+
+      // Render Domain Details List
+      const detailsContainer = document.getElementById('domain-details');
+      detailsContainer.innerHTML = '';
+      sortedDomains.forEach(domainKey => {
+        const info = domainInfo[domainKey];
+        const score = domainScores[domainKey];
+        const item = document.createElement('div');
+        item.className = "bg-slate-50 border border-slate-200 p-3 rounded-xl flex items-center justify-between";
+        item.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">${info.icon}</span>
+            <div>
+              <span class="font-heading font-bold text-sm text-slate-800 block">${info.title}</span>
+              <span class="text-xs text-slate-500">${info.desc.substring(0, 60)}...</span>
+            </div>
+          </div>
+          <span class="px-3 py-1 bg-white border font-heading font-bold rounded-lg text-xs text-slate-700 shadow-xs">
+            Skor: ${score}
+          </span>
+        `;
+        detailsContainer.appendChild(item);
+      });
+
+      // Render Chart.js
+      renderChart(domainScores);
+    }
+
+    function renderChart(scores) {
+      const ctx = document.getElementById('intelligenceChart').getContext('2d');
+      
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+
+      const labels = [
+        'Linguistik', 'Logis-Matematika', 'Visual-Spasial', 'Musikal',
+        'Kinestetik', 'Interpersonal', 'Intrapersonal', 'Naturalis'
+      ];
+      
+      const dataValues = [
+        scores.linguistik, scores.logis, scores.visual, scores.musikal,
+        scores.kinestetik, scores.interpersonal, scores.intrapersonal, scores.naturalis
+      ];
+
+      chartInstance = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Tingkat Kecerdasan & Minat',
+            data: dataValues,
+            backgroundColor: 'rgba(6, 214, 160, 0.25)',
+            borderColor: '#06D6A0',
+            borderWidth: 3,
+            pointBackgroundColor: '#FF70A6',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: '#FF70A6',
+            pointRadius: 5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              angleLines: { color: '#e2e8f0' },
+              grid: { color: '#cbd5e1' },
+              pointLabels: {
+                font: { family: 'Fredoka', size: 11, weight: 'bold' },
+                color: '#334155'
+              },
+              ticks: { display: false }
+            }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    }
+
+    function resetQuiz() {
+      currentStep = 0;
+      userAnswers = {};
+      studentData = {};
+      document.getElementById('form-biodata').reset();
+      document.getElementById('form-open').reset();
+      document.getElementById('student-date').valueAsDate = new Date();
+
+      document.getElementById('screen-result').classList.add('hidden');
+      document.getElementById('screen-intro').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
